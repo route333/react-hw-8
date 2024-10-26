@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {useState} from "react";
 import styled from "styled-components";
 
 const BtnsContainer = styled.ul`
@@ -23,61 +24,58 @@ const Buttons = styled.button`
   }
 `;
 
-class Feedback extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+const Feedback = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  PlusGood = () => {
-    this.setState({ good: this.state.good + 1 });
+   const PlusGood = () => {
+    setGood(good + 1);
   }
 
-  PlusNeutral = () => {
-    this.setState({ neutral: this.state.neutral + 1 });
+  const PlusNeutral = () => {
+    setNeutral(neutral + 1)
   }
 
-  PlusBad = () => {
-    this.setState({ bad: this.state.bad + 1 });
+  const PlusBad = () => {
+    setBad(bad + 1);
   }
 
-  CountTotal = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
-  }
+ const CountTotal = () => {
+        return good + neutral + bad;
+      }
 
-  CountPositiveFeedback = () => {
-    const total = this.CountTotal();
-    const positive = this.state.good;
-    if (total === 0) return 0;
-    return Math.round((positive / total) * 100);
-  };
+  const CountPositiveFeedback = () => {
+        const total = CountTotal();
+        const positive = good;
+        if (total === 0) return 0;
+        return Math.round((positive / total) * 100);
+      };
 
-  render() {
-    return (
-      <>     
-        <h1>Please leave feedback</h1>
-        <BtnsContainer>
-          <BtnsItem>
-            <Buttons onClick={this.PlusGood}>Good</Buttons>
-          </BtnsItem>
-          <BtnsItem>
-            <Buttons onClick={this.PlusNeutral}>Neutral</Buttons>
-          </BtnsItem>
-          <BtnsItem>
-            <Buttons onClick={this.PlusBad}>Bad</Buttons>
-          </BtnsItem>
-        </BtnsContainer>
-        <h2>Statistics</h2>
+  return (
+          <>     
+            <h1>Please leave feedback</h1>
+            <BtnsContainer>
+              <BtnsItem>
+                <Buttons onClick={PlusGood}>Good</Buttons>
+              </BtnsItem>
+              <BtnsItem>
+                <Buttons onClick={PlusNeutral}>Neutral</Buttons>
+              </BtnsItem>
+              <BtnsItem>
+                <Buttons onClick={PlusBad}>Bad</Buttons>
+              </BtnsItem>
+            </BtnsContainer>
+            <h2>Statistics</h2>
+            <p>Good: {good}</p>
+            <p>Neutral: {neutral}</p>
+            <p>Bad: {bad}</p>
+            <p>Total: {CountTotal()}</p>
+            <p>Positive Feedback: {CountPositiveFeedback()}%</p>
+          </>
+        );
 
-        <p>Good: {this.state.good}</p>
-        <p>Neutral: {this.state.neutral}</p>
-        <p>Bad: {this.state.bad}</p>
-        <p>Total: {this.CountTotal()}</p>
-        <p>Positive Feedback: {this.CountPositiveFeedback()}%</p>
-      </>
-    );
-  }
 }
+
 
 export default Feedback;
